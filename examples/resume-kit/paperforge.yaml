@@ -1,0 +1,27 @@
+title: "Senior Engineering Resume Kit"
+subtitle: "Executive Resume, Technical Case Studies & Impact Matrices"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "2026"
+
+output:
+  file: "./dist/resume-kit.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+pdf:
+  format: "A4"
+  orientation: "portrait"
+  margins:
+    top: "15mm"
+    bottom: "15mm"
+    left: "15mm"
+    right: "15mm"
+
+toc:
+  enabled: false
+
+theme:
+  name: "vivek-kushwaha-labs"

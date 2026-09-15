@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="200">
+  <rect width="600" height="200" rx="8" fill="#0A0B0E"/>
+  <rect x="20" y="20" width="170" height="160" rx="6" fill="#16181D" stroke="#DFBA87" stroke-width="1.5"/>
+  <rect x="215" y="20" width="170" height="160" rx="6" fill="#16181D" stroke="#DFBA87" stroke-width="1.5"/>
+  <rect x="410" y="20" width="170" height="160" rx="6" fill="#16181D" stroke="#DFBA87" stroke-width="1.5"/>
+  
+  <text x="105" y="60" fill="#DFBA87" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">DCF Valuation</text>
+  <text x="105" y="100" fill="#FFFFFF" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">$184.50</text>
+  <text x="105" y="135" fill="#64748B" font-family="sans-serif" font-size="11" text-anchor="middle">WACC 8.4% | PGR 2.5%</text>
+
+  <text x="300" y="60" fill="#DFBA87" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">EV / NTM EBITDA</text>
+  <text x="300" y="100" fill="#FFFFFF" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">21.4x</text>
+  <text x="300" y="135" fill="#64748B" font-family="sans-serif" font-size="11" text-anchor="middle">Peer Median 18.2x</text>
+
+  <text x="495" y="60" fill="#DFBA87" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Implied Upside</text>
+  <text x="495" y="100" fill="#4ADE80" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">+28.4%</text>
+  <text x="495" y="135" fill="#64748B" font-family="sans-serif" font-size="11" text-anchor="middle">Confidence Interval 85%</text>
+</svg>

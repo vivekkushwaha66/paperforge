@@ -1,0 +1,279 @@
+/* Paperforge Default Clean Print Theme */
+
+:root {
+  --color-text: #1E293B;
+  --color-text-muted: #64748B;
+  --color-heading: #0F172A;
+  --color-border: #E2E8F0;
+  --color-bg-subtle: #F8FAFC;
+  --color-bg-code: #F1F5F9;
+  --color-primary: #2563EB;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 20mm;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+  background-color: #FFFFFF;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Page Break Controls */
+.chapter-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-after: page;
+}
+
+pre, blockquote, table, figure, .avoid-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.25;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h1 {
+  font-size: 24pt;
+  border-bottom: 1.5px solid var(--color-border);
+  padding-bottom: 0.3em;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 18pt;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.2em;
+}
+
+h3 {
+  font-size: 14pt;
+}
+
+h4 {
+  font-size: 12pt;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  border-left: 4px solid var(--color-primary);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 9.5pt;
+}
+
+th, td {
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--color-bg-subtle);
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+tr:nth-child(even) td {
+  background-color: #FAFBFD;
+}
+
+/* Code & Syntax */
+code {
+  background-color: var(--color-bg-code);
+  color: #0F172A;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  padding: 14px 18px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.2em 0;
+  line-height: 1.45;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: 9pt;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5em auto;
+  border-radius: 4px;
+}
+
+/* Table of Contents (TOC) */
+.forge-toc {
+  margin-bottom: 2em;
+}
+
+.forge-toc .toc-title {
+  font-size: 20pt;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0.4em;
+}
+
+.forge-toc .toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.forge-toc .toc-list.depth-2 {
+  padding-left: 20px;
+}
+
+.forge-toc .toc-list.depth-3 {
+  padding-left: 40px;
+}
+
+.forge-toc .toc-item {
+  margin-bottom: 0.5em;
+}
+
+.forge-toc .toc-link {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 10pt;
+}
+
+.forge-toc .toc-number {
+  font-weight: 600;
+  color: var(--color-heading);
+  margin-right: 4px;
+}
+
+.forge-toc .toc-leader {
+  flex-grow: 1;
+  border-bottom: 1px dotted #94A3B8;
+  margin: 0 8px;
+  position: relative;
+  top: -2px;
+}
+
+.forge-toc .toc-page {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+/* Dedicated Cover Styling */
+.page-cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 30mm 15mm;
+}
+
+.cover-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cover-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 12px;
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.cover-title {
+  font-size: 32pt;
+  line-height: 1.15;
+  color: var(--color-heading);
+  margin: 0 0 16px 0;
+  border: none;
+  padding: 0;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0 0 32px 0;
+}
+
+.cover-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+  font-size: 9pt;
+  color: var(--color-text-muted);
+}

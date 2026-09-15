@@ -1,0 +1,45 @@
+title: "Technical Architecture Whitepaper"
+subtitle: "Deterministic Document Compilation at Scale"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "September 2026"
+subject: "Distributed Systems & Publishing Architecture"
+keywords:
+  - "systems"
+  - "architecture"
+  - "whitepaper"
+  - "compiler"
+
+output:
+  file: "./dist/architecture-whitepaper.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+cover:
+  file: "./cover.md"
+header:
+  file: "./header.md"
+footer:
+  file: "./footer.md"
+
+pdf:
+  format: "A4"
+  orientation: "portrait"
+  margins:
+    top: "20mm"
+    bottom: "20mm"
+    left: "20mm"
+    right: "20mm"
+
+toc:
+  enabled: true
+  title: "Table of Contents"
+  minDepth: 1
+  maxDepth: 3
+  ordered: true
+  pageNumbers: true
+
+theme:
+  name: "vivek-kushwaha-labs"

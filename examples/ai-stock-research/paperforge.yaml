@@ -1,0 +1,63 @@
+title: "AI Stock Research Prompt Library"
+subtitle: "A practical framework for AI-assisted equity analysis and financial modeling"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "September 2026"
+subject: "Financial Technology & Equity Valuation"
+keywords:
+  - "finance"
+  - "equity research"
+  - "AI prompts"
+  - "DCF modeling"
+
+output:
+  file: "./dist/ai-stock-research.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+cover:
+  file: "./cover.md"
+header:
+  file: "./header.md"
+footer:
+  file: "./footer.md"
+
+pdf:
+  format: "A4"
+  orientation: "portrait"
+  printBackground: true
+  pageNumbers: true
+  margins:
+    top: "22mm"
+    bottom: "22mm"
+    left: "20mm"
+    right: "20mm"
+  renderer: "system-browser"
+
+toc:
+  enabled: true
+  title: "Table of Contents"
+  minDepth: 1
+  maxDepth: 3
+  ordered: true
+  pageNumbers: true
+  pageBreakAfter: true
+  position: "after-cover"
+
+typography:
+  selectors:
+    body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    headings: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    code: "'SFMono-Regular', Consolas, Monaco, monospace"
+    cover: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  fontSize:
+    base: "10.5pt"
+    h1: "24pt"
+    h2: "17pt"
+    h3: "13pt"
+
+theme:
+  name: "vivek-kushwaha-labs"
+  css: "./theme/style.css"

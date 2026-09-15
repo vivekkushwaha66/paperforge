@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 260" width="100%" height="260">
+  <rect width="650" height="260" rx="8" fill="#0A0B0E"/>
+  
+  <!-- Source Stage -->
+  <rect x="25" y="40" width="160" height="180" rx="6" fill="#16181D" stroke="#64748B" stroke-width="1.5"/>
+  <text x="105" y="70" fill="#DFBA87" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">1. Source Repos</text>
+  <text x="105" y="105" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Markdown Docs (.md)</text>
+  <text x="105" y="130" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">YAML Frontmatter</text>
+  <text x="105" y="155" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Local Vector SVGs</text>
+  <text x="105" y="180" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Offline WOFF2 Fonts</text>
+
+  <!-- Arrow 1 -->
+  <path d="M 195 130 L 235 130" stroke="#DFBA87" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Engine Stage -->
+  <rect x="245" y="30" width="170" height="200" rx="6" fill="#1A1D24" stroke="#DFBA87" stroke-width="2"/>
+  <text x="330" y="65" fill="#DFBA87" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">2. Paperforge CLI</text>
+  <text x="330" y="95" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">3-Tier Ordering</text>
+  <text x="330" y="120" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">TOC Synthesizer</text>
+  <text x="330" y="145" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Base64 Inliner</text>
+  <text x="330" y="170" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">System Browser CDP</text>
+  <text x="330" y="195" fill="#4ADE80" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">&lt; 3.5MB Zero-Download</text>
+
+  <!-- Arrow 2 -->
+  <path d="M 425 130 L 465 130" stroke="#DFBA87" stroke-width="2"/>
+
+  <!-- Output Stage -->
+  <rect x="475" y="40" width="150" height="180" rx="6" fill="#16181D" stroke="#64748B" stroke-width="1.5"/>
+  <text x="550" y="70" fill="#DFBA87" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">3. Distribution PDF</text>
+  <text x="550" y="105" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Vector Text Streams</text>
+  <text x="550" y="130" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Clickable TOC Links</text>
+  <text x="550" y="155" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">Deterministic /Info</text>
+  <text x="550" y="180" fill="#E2E8F0" font-family="sans-serif" font-size="11" text-anchor="middle">XMP Embedded Data</text>
+</svg>

@@ -1,0 +1,65 @@
+{
+  "name": "@vivekkushwaha66/paperforge",
+  "version": "0.1.0",
+  "description": "Markdown to publication-grade PDF publishing CLI",
+  "author": "Vivek Kushwaha <vivekkushwaha66@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/vivekkushwaha66/paperforge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivekkushwaha66/paperforge.git"
+  },
+  "keywords": [
+    "markdown",
+    "pdf",
+    "cli",
+    "publishing",
+    "ebook",
+    "whitepaper",
+    "puppeteer-core",
+    "typesetting"
+  ],
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "paperforge": "./dist/cli/index.mjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli/index.ts",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests/unit",
+    "test:e2e": "vitest run tests/e2e",
+    "test:all": "vitest run"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "chrome-launcher": "^1.1.2",
+    "commander": "^13.1.0",
+    "date-fns": "^4.4.0",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "pdf-lib": "^1.17.1",
+    "puppeteer-core": "^24.4.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.13.9",
+    "tsdown": "^0.21.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

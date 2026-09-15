@@ -1,0 +1,39 @@
+title: "AI Prompt Library for Senior Engineers"
+subtitle: "High-leverage prompts for system design, distributed consensus, and code reviews"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "2026"
+
+output:
+  file: "./dist/ai-prompt-library.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+cover:
+  file: "./cover.md"
+header:
+  file: "./header.md"
+footer:
+  file: "./footer.md"
+
+pdf:
+  format: "A4"
+  orientation: "portrait"
+  margins:
+    top: "20mm"
+    bottom: "20mm"
+    left: "20mm"
+    right: "20mm"
+
+toc:
+  enabled: true
+  title: "Contents"
+  minDepth: 1
+  maxDepth: 2
+  ordered: true
+  pageNumbers: true
+
+theme:
+  name: "default"
