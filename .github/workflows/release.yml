@@ -13,6 +13,11 @@ on:
           - patch
           - minor
           - major
+      otp:
+        description: 'NPM 2FA One-Time Password (6-digit OTP, if required by your account)'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
@@ -65,8 +70,13 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_OTP: ${{ github.event.inputs.otp }}
         run: |
-          npm publish --access public --provenance
+          if [ -n "$NPM_OTP" ]; then
+            npm publish --access public --provenance --otp="$NPM_OTP"
+          else
+            npm publish --access public --provenance
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
