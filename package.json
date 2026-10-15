@@ -1,6 +1,6 @@
 {
   "name": "@vivekkushwaha66/paperforge",
-  "version": "0.1.0",
+  "version": "0.2.0-beta.0",
   "description": "Markdown to publication-grade PDF publishing CLI",
   "author": "Vivek Kushwaha <vivekkushwaha66@gmail.com>",
   "license": "MIT",

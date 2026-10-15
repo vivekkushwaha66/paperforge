@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/custom-page-margins-and-cards
     paths:
       - 'docs/**'
       - '.github/workflows/docs.yml'
