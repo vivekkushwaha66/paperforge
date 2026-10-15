@@ -1,0 +1,29 @@
+title: "Modern Cloud Microservices Architecture"
+subtitle: "Vector Architecture Cards rendered via Direct PDF Engine"
+author: "Engineering Platform Team"
+version: "2.4.0"
+date: "2026-10-15"
+subject: "Distributed Systems Architecture & Resilience"
+keywords:
+  - architecture
+  - distributed-systems
+  - microservices
+  - vector-graphics
+  - svg
+
+output:
+  file: "./dist/vector-architecture-cards.pdf"
+
+content:
+  directory: "./content"
+  include:
+    - "*.md"
+
+pdf:
+  renderer: "pdfmake"
+  layout: "cards"
+  fullBleed: true
+  width: "1080px"
+  height: "1080px"
+  margins: "40px 48px 40px 48px"
+  background: "#0B0F19"

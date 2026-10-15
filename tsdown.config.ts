@@ -17,5 +17,13 @@ export default defineConfig({
       fs.mkdirSync(destThemes, { recursive: true });
       fs.cpSync(srcThemes, destThemes, { recursive: true });
     }
+
+    const mermaidSrc = path.resolve('node_modules/mermaid/dist/mermaid.min.js');
+    const mermaidDest = path.resolve('dist/rendering/mermaid.min.js');
+    if (fs.existsSync(mermaidSrc)) {
+      fs.mkdirSync(path.dirname(mermaidDest), { recursive: true });
+      fs.copyFileSync(mermaidSrc, mermaidDest);
+    }
   }
 });
+

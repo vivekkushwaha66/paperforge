@@ -106,7 +106,7 @@ export const PdfConfigSchema = z.object({
   margins: MarginsSchema.default({}),
   content_margins: ContentMarginsSchema.optional(),
   contentMargins: ContentMarginsSchema.optional(),
-  renderer: z.enum(['system-browser', 'puppeteer-core', 'typst']).default('system-browser')
+  renderer: z.enum(['system-browser', 'puppeteer-core', 'typst', 'pdfmake']).default('system-browser')
 }).default({});
 
 export const ProjectConfigSchema = z.object({

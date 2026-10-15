@@ -117,5 +117,23 @@ describe('E2E: Full Publication Build Pipeline & PDF Verification', () => {
     expect(pdfDoc.getSubject()).toBe('Strategic AI Compute & Agent Orchestration');
     expect(pdfDoc.getKeywords()).toContain('gpu-clusters');
   }, BUILD_TIMEOUT);
+
+  it('compiles "Vector Chart Carousel" using direct pdfmake renderer and SVG charts', async () => {
+    const projectDir = path.resolve('examples/vector-chart-carousel');
+    const expectedPdfPath = path.resolve(projectDir, 'dist/vector-architecture-cards.pdf');
+
+    if (fs.existsSync(expectedPdfPath)) {
+      fs.unlinkSync(expectedPdfPath);
+    }
+
+    await runBuildCommand(projectDir, {});
+
+    expect(fs.existsSync(expectedPdfPath)).toBe(true);
+    const pdfBytes = fs.readFileSync(expectedPdfPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes, { updateMetadata: false });
+    expect(pdfDoc.getPageCount()).toBe(3);
+    expect(pdfDoc.getTitle()).toBe('Modern Cloud Microservices Architecture');
+    expect(pdfDoc.getAuthor()).toBe('Engineering Platform Team');
+  }, BUILD_TIMEOUT);
 });
 

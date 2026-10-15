@@ -1,9 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import puppeteer, { PaperFormat } from 'puppeteer-core';
 import { IPdfRenderer, RenderOptions, RenderResult } from './engine-interface.js';
 import { buildPuppeteerHeaderTemplate, buildPuppeteerFooterTemplate } from '../layout/header-footer.js';
 import { logger } from '../logger/logger.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 export function findSystemBrowser(): string {
   // 1. Explicit environment variable
@@ -66,6 +71,21 @@ export function findSystemBrowser(): string {
   );
 }
 
+export function findMermaidScript(): string | null {
+  const candidatePaths = [
+    path.resolve(__dirname, 'mermaid.min.js'),
+    path.resolve(__dirname, 'rendering/mermaid.min.js'),
+    path.resolve(__dirname, '../rendering/mermaid.min.js'),
+    path.resolve(__dirname, '../../node_modules/mermaid/dist/mermaid.min.js'),
+    path.resolve(__dirname, '../../../node_modules/mermaid/dist/mermaid.min.js'),
+    path.resolve(process.cwd(), 'node_modules/mermaid/dist/mermaid.min.js')
+  ];
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
+
 export class SystemBrowserRenderer implements IPdfRenderer {
   public readonly name = 'system-browser';
 
@@ -88,11 +108,111 @@ export class SystemBrowserRenderer implements IPdfRenderer {
 
     try {
       const page = await browser.newPage();
+      const pdfConfig = options.config.pdf;
+
+      // Set viewport matching target aspect ratio / dimensions
+      let vpWidth = 1080;
+      let vpHeight = 1080;
+      if (pdfConfig.width && pdfConfig.height) {
+        vpWidth = parseInt(pdfConfig.width, 10) || 1080;
+        vpHeight = parseInt(pdfConfig.height, 10) || 1080;
+      } else if (pdfConfig.format?.includes('x')) {
+        const [w, h] = pdfConfig.format.split('x');
+        vpWidth = parseInt(w, 10) || 1080;
+        vpHeight = parseInt(h, 10) || 1080;
+      } else if (pdfConfig.format?.toLowerCase() === 'square') {
+        vpWidth = 1080;
+        vpHeight = 1080;
+      } else if (pdfConfig.orientation === 'landscape') {
+        vpWidth = 1440;
+        vpHeight = 900;
+      } else {
+        vpWidth = 1200;
+        vpHeight = 1600;
+      }
+
+      await page.setViewport({
+        width: vpWidth,
+        height: vpHeight,
+        deviceScaleFactor: 2
+      });
+
       await page.setContent(assembledHtml, {
         waitUntil: ['load', 'domcontentloaded']
       });
 
-      const pdfConfig = options.config.pdf;
+
+      // Render Mermaid diagrams if present
+      const hasMermaid =
+        assembledHtml.includes('language-mermaid') ||
+        assembledHtml.includes('class="mermaid"') ||
+        assembledHtml.includes("class='mermaid'");
+
+      if (hasMermaid) {
+        const mermaidScript = findMermaidScript();
+        if (mermaidScript) {
+          logger.debug(`Injecting Mermaid engine from: ${mermaidScript}`);
+          await page.addScriptTag({ path: mermaidScript });
+
+          const isDarkTheme =
+            assembledHtml.includes('forge-page') ||
+            Boolean(pdfConfig.background && pdfConfig.background !== '#FFFFFF') ||
+            pdfConfig.layout === 'cards';
+
+          await page.evaluate(async (dark) => {
+            const codeNodes = document.querySelectorAll(
+              'pre code.language-mermaid, pre.language-mermaid code, code.language-mermaid, div.language-mermaid'
+            );
+            codeNodes.forEach((node, idx) => {
+              const pre = node.closest('pre') || node;
+              const div = document.createElement('div');
+              div.className = 'mermaid';
+              div.id = `mermaid-chart-${idx}`;
+              div.textContent = node.textContent || '';
+              pre.parentNode?.replaceChild(div, pre);
+            });
+
+            if ((window as any).mermaid) {
+              (window as any).mermaid.initialize({
+                startOnLoad: false,
+                securityLevel: 'loose',
+                theme: dark ? 'dark' : 'default',
+                themeVariables: dark
+                  ? {
+                      darkMode: true,
+                      background: 'transparent',
+                      mainBkg: '#1A1C24',
+                      nodeBorder: '#383C4A',
+                      primaryColor: '#DFBA87',
+                      primaryTextColor: '#0E1015',
+                      primaryBorderColor: '#DFBA87',
+                      lineColor: '#94A3B8',
+                      secondaryColor: '#181A20',
+                      tertiaryColor: '#121316',
+                      textColor: '#F1F5F9',
+                      fontSize: '13px',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                    }
+                  : {
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                    }
+              });
+
+              await (window as any).mermaid.run();
+
+              // Remove any mermaid tooltip / temporary elements added to body
+              document
+                .querySelectorAll('.mermaidTooltip, [class*="mermaidTooltip"], [id^="d3-tip"]')
+                .forEach(el => el.remove());
+            }
+          }, isDarkTheme);
+
+
+        } else {
+          logger.warn('Mermaid blocks detected, but mermaid.min.js was not found.');
+        }
+      }
+
       const isFullBleed =
         assembledHtml.includes('forge-page') ||
         pdfConfig.fullBleed ||

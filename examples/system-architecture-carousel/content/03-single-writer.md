@@ -23,51 +23,15 @@ Every event gets a position in a single ordered log before it's processed, so be
 
 <div class="forge-diagram-card">
   <div class="diagram-tag">BETTER PATH</div>
-  <div class="diagram-flow" style="display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-    <!-- Orders Node -->
-    <div class="diagram-node" style="width: 120px; padding: 18px 16px;">
-      Orders
-    </div>
 
-    <!-- Append Arrow -->
-    <div class="diagram-arrow">
-      <span class="diagram-arrow-label">append</span>
-      <div class="diagram-arrow-line">──────►</div>
-    </div>
+```mermaid
+graph LR
+  Orders[Orders] -->|append| Seq[Sequencer<br/><small>ordered log</small>]
+  Seq -->|key A| WA[Writer A] --> BA[Book A]
+  Seq -->|key B| WB[Writer B] --> BB[Book B]
 
-    <!-- Sequencer Node (Accent Gold) -->
-    <div class="diagram-node accent" style="width: 170px; padding: 16px 20px;">
-      Sequencer
-      <span class="sublabel">ordered log</span>
-    </div>
-
-    <!-- Split Arrows and Writers -->
-    <div style="display: flex; flex-direction: column; gap: 16px; flex: 1;">
-      <!-- Row A -->
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="diagram-arrow" style="width: 60px;">
-          <span class="diagram-arrow-label">key A</span>
-          <div class="diagram-arrow-line">────►</div>
-        </div>
-        <div class="diagram-node" style="padding: 10px 16px;">Writer A</div>
-        <div class="diagram-arrow" style="width: 40px;">
-          <div class="diagram-arrow-line">────►</div>
-        </div>
-        <div class="diagram-node" style="padding: 10px 16px;">Book A</div>
-      </div>
-
-      <!-- Row B -->
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="diagram-arrow" style="width: 60px;">
-          <span class="diagram-arrow-label">key B</span>
-          <div class="diagram-arrow-line">────►</div>
-        </div>
-        <div class="diagram-node" style="padding: 10px 16px;">Writer B</div>
-        <div class="diagram-arrow" style="width: 40px;">
-          <div class="diagram-arrow-line">────►</div>
-        </div>
-        <div class="diagram-node" style="padding: 10px 16px;">Book B</div>
-      </div>
-    </div>
-  </div>
+  classDef accent fill:#DFBA87,stroke:#DFBA87,color:#0E1015,font-weight:bold;
+  classDef default fill:#1C1E26,stroke:#383C4A,color:#F8FAFC;
+  class Seq accent;
+```
 </div>

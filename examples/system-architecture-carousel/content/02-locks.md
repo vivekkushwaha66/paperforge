@@ -21,34 +21,16 @@ Lock the book, process, release. It works at low volume, then collapses under lo
 
 <div class="forge-diagram-card">
   <div class="diagram-tag">PROBLEM PATH</div>
-  <div class="diagram-flow" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-    <!-- Threads Stack -->
-    <div style="display: flex; flex-direction: column; gap: 12px; width: 140px;">
-      <div class="diagram-node">Thread 1</div>
-      <div class="diagram-node">Thread 2</div>
-      <div class="diagram-node">Thread 3</div>
-    </div>
 
-    <!-- Wait Arrow -->
-    <div class="diagram-arrow" style="flex: 1;">
-      <span class="diagram-arrow-label">wait</span>
-      <div class="diagram-arrow-line">───────►</div>
-    </div>
+```mermaid
+graph LR
+  T1[Thread 1] -->|wait| Lock[Lock]
+  T2[Thread 2] -->|wait| Lock
+  T3[Thread 3] -->|wait| Lock
+  Lock -->|one at a time| OB[Order book]
 
-    <!-- Lock Node -->
-    <div class="diagram-node" style="width: 140px; padding: 18px 20px;">
-      Lock
-    </div>
-
-    <!-- One at a time Arrow -->
-    <div class="diagram-arrow" style="flex: 1;">
-      <span class="diagram-arrow-label">one at a time</span>
-      <div class="diagram-arrow-line">───────►</div>
-    </div>
-
-    <!-- Order Book Node -->
-    <div class="diagram-node" style="width: 150px; padding: 18px 20px;">
-      Order book
-    </div>
-  </div>
+  classDef accent fill:#DFBA87,stroke:#DFBA87,color:#0E1015,font-weight:bold;
+  classDef default fill:#1C1E26,stroke:#383C4A,color:#F8FAFC;
+  class Lock accent;
+```
 </div>

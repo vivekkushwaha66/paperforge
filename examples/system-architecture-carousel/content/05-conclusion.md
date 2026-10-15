@@ -18,46 +18,21 @@ footer:
 Payments, inventory, booking and real-time collaboration share one shape: many writers, one piece of contested state.
 
 <div class="forge-diagram-card">
-  <!-- BEFORE Row -->
-  <div class="split-card-row">
-    <div class="split-card-label">BEFORE</div>
-    <div class="diagram-flow" style="flex: 1; justify-content: flex-start; gap: 20px;">
-      <div class="diagram-node" style="width: 170px; padding: 14px 20px;">
-        Many writers
-      </div>
-      <div class="diagram-arrow" style="width: 100px;">
-        <span class="diagram-arrow-label">contended</span>
-        <div class="diagram-arrow-line">──────►</div>
-      </div>
-      <div class="diagram-node" style="width: 170px; padding: 14px 20px;">
-        Shared state
-      </div>
-    </div>
-  </div>
 
-  <div style="height: 1px; background-color: #232630; margin: 16px 0;"></div>
+```mermaid
+graph LR
+  subgraph BEFORE
+    W1[Many writers] -->|contended| S1[Shared state]
+  end
+  subgraph AFTER
+    W2[Many writers] -->|by key| OA[Owner A]
+    W2 -->|by key| OB[Owner B]
+  end
 
-  <!-- AFTER Row -->
-  <div class="split-card-row" style="margin-bottom: 0;">
-    <div class="split-card-label">AFTER</div>
-    <div class="diagram-flow" style="flex: 1; justify-content: flex-start; gap: 20px; align-items: center;">
-      <div class="diagram-node" style="width: 170px; padding: 14px 20px;">
-        Many writers
-      </div>
-      <div class="diagram-arrow" style="width: 100px;">
-        <span class="diagram-arrow-label">by key</span>
-        <div class="diagram-arrow-line">──────►</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div class="diagram-node accent" style="width: 180px; padding: 12px 20px;">
-          Owner A
-        </div>
-        <div class="diagram-node accent" style="width: 180px; padding: 12px 20px;">
-          Owner B
-        </div>
-      </div>
-    </div>
-  </div>
+  classDef accent fill:#DFBA87,stroke:#DFBA87,color:#0E1015,font-weight:bold;
+  classDef default fill:#1C1E26,stroke:#383C4A,color:#F8FAFC;
+  class OA,OB accent;
+```
 </div>
 
 <div class="takeaway-box">

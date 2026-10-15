@@ -16,6 +16,7 @@ export * from './layout/cover.js';
 export * from './layout/typography.js';
 export * from './rendering/engine-interface.js';
 export * from './rendering/system-browser.js';
+export * from './rendering/pdfmake-renderer.js';
 export * from './rendering/html-assembler.js';
 export * from './validation/project-validator.js';
 export * from './validation/diagnostics.js';

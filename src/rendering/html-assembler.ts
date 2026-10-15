@@ -129,8 +129,12 @@ export function assembleHtml(publication: Publication): AssembledHtmlResult {
     doc.htmlContent = md.render(inlinedMd);
 
     const classes: string[] = ['forge-chapter'];
-    if (doc.pageBreakBefore) classes.push('page-break-before');
-    if (doc.pageBreakAfter) classes.push('page-break-after');
+    if (!fullBleed) {
+      if (doc.pageBreakBefore && (i > 0 || publication.cover)) classes.push('page-break-before');
+      if (doc.pageBreakAfter) classes.push('page-break-after');
+    }
+
+
 
     if (fullBleed) {
       classes.push('forge-page');

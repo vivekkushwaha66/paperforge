@@ -5,6 +5,8 @@ import { loadConfig } from '../config/loader.js';
 import { scanProject } from '../document/scanner.js';
 import { assembleHtml } from '../rendering/html-assembler.js';
 import { SystemBrowserRenderer } from '../rendering/system-browser.js';
+import { PdfMakeRenderer } from '../rendering/pdfmake-renderer.js';
+import { IPdfRenderer } from '../rendering/engine-interface.js';
 import { injectPdfMetadata } from '../document/metadata.js';
 import { validateProject } from '../validation/project-validator.js';
 import { printDiagnostics } from '../validation/diagnostics.js';
@@ -12,7 +14,7 @@ import { logger } from '../logger/logger.js';
 
 export interface BuildCliOptions {
   output?: string;
-  renderer?: 'system-browser' | 'puppeteer-core' | 'typst';
+  renderer?: 'system-browser' | 'puppeteer-core' | 'typst' | 'pdfmake';
   verbose?: boolean;
   watch?: boolean;
 }
@@ -96,17 +98,24 @@ export async function runBuildCommand(rawProjectPath: string = '.', options: Bui
       logger.warn(`Found ${assetIssues.length} unresolved asset reference(s).`);
     }
 
+    const targetRenderer = options.renderer || config.pdf.renderer;
     // Stage 11: Dispatch to PDF Rendering Engine
-    logger.step(11, 14, `Dispatch to PDF Engine (${config.pdf.renderer})`);
+    logger.step(11, 14, `Dispatch to PDF Engine (${targetRenderer})`);
     currentStage = 11;
-    const renderer = new SystemBrowserRenderer();
+    let renderer: IPdfRenderer;
+    if (targetRenderer === 'pdfmake') {
+      renderer = new PdfMakeRenderer();
+    } else {
+      renderer = new SystemBrowserRenderer();
+    }
     const outputPath = path.resolve(projectDir, config.output.file);
 
     const renderResult = await renderer.render(html, {
       config,
       headerTemplate: scanned.headerTemplate,
       footerTemplate: scanned.footerTemplate,
-      outputPath
+      outputPath,
+      publication
     });
 
     // Stage 12: Inject PDF /Info & XMP Metadata
