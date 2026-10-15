@@ -13,14 +13,20 @@ It treats document generation as a **reproducible publishing workflow as code**.
 
 ## Key Highlights
 
+* **Documentation Website:** [https://vivekkushwaha66.github.io/paperforge/](https://vivekkushwaha66.github.io/paperforge/)
 * **Lightweight Zero-Download Engine:** Uses `puppeteer-core` with automatic system browser discovery (Microsoft Edge on Windows, Google Chrome/Chromium on macOS and Linux) — **zero ~300MB downloads during npm install**.
+* **Direct Vector PDF Engine (`pdfmake`):** Pure JavaScript vector renderer with zero browser dependencies for instant sub-100ms builds.
+* **Full-Bleed Page Backgrounds:** Edge-to-edge printing with custom background colors and gradients per page.
+* **Separate Page & Content Margins:** Configure outer page shell margins/padding and inner content spacing independently.
+* **Mermaid & Vector SVG Charting:** Author interactive diagrams, flowcharts, and architecture topographies with full color and theme customization.
+* **Square Carousel & Slide Layouts:** Built-in `1080x1080` square card layouts with in-page accent bars, running headers, and page counters (`01 / 05`).
 * **3-Tier Deterministic Ordering:** Explicit frontmatter `order` -> lexicographical filename -> filesystem fallback.
 * **Configurable Table of Contents (TOC):** Declarative depth, dotted leader lines, anchor navigation, and page counters.
 * **Typography & Font Selectors:** Local offline fonts (`.woff2`, `.woff`, `.ttf`, `.otf` with weight/style variants) with 100% Base64 inlining, system fonts, and Google Fonts.
 * **Running Headers & Footers:** Dynamic template interpolation (`{{title}}`, `{{chapter}}`, `{{author}}`, `{{page}}`, `{{pages}}`).
 * **Dedicated Cover Pages:** Full-bleed custom cover generation with independent styling.
 * **Vector Graphics & Asset Resolution:** Automatic relative path resolution and offline Base64 inlining for SVG, PNG, JPG, and WebP.
-* **Standard PDF /Info & XMP Metadata:** Injects Title, Author, Subject, Keywords, Creator, and Producer tags.
+* **Dynamic PDF /Info & XMP Metadata:** Injects Title, Author, Subject, Keywords, Creator, and Producer tags with runtime frontmatter overrides.
 * **Rich Chalk CLI & Diagnostic Error Logs:** Timestamped execution traces and automatic `.paperforge/logs/build-error-<timestamp>.log` generation on build issues.
 
 ---
@@ -75,6 +81,9 @@ paperforge build ./my-guide
 
 # Custom output file
 paperforge build ./my-guide -o ./dist/custom-name.pdf
+
+# Select rendering engine: system-browser (default) or pdfmake
+paperforge build ./my-guide --renderer pdfmake
 
 # Verbose debug logging
 paperforge build ./my-guide --verbose
