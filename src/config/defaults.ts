@@ -20,6 +20,8 @@ export const DEFAULT_CONFIG: ProjectConfig = {
     orientation: 'portrait',
     printBackground: true,
     pageNumbers: true,
+    fullBleed: false,
+    layout: 'document',
     margins: {
       top: '20mm',
       bottom: '20mm',
@@ -27,6 +29,7 @@ export const DEFAULT_CONFIG: ProjectConfig = {
       right: '20mm'
     },
     renderer: 'system-browser'
+
   },
   toc: {
     enabled: true,

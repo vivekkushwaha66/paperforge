@@ -93,25 +93,58 @@ export class SystemBrowserRenderer implements IPdfRenderer {
       });
 
       const pdfConfig = options.config.pdf;
-      const headerHtml = buildPuppeteerHeaderTemplate(options.headerTemplate, options.config);
-      const footerHtml = buildPuppeteerFooterTemplate(options.footerTemplate, options.config);
+      const isFullBleed =
+        assembledHtml.includes('forge-page') ||
+        pdfConfig.fullBleed ||
+        Boolean(pdfConfig.background) ||
+        pdfConfig.layout === 'cards' ||
+        pdfConfig.format?.toLowerCase() === 'square';
 
-      const hasHeaderOrFooter = Boolean(options.headerTemplate || options.footerTemplate || pdfConfig.pageNumbers);
-
-      const pdfUint8 = await page.pdf({
-        format: (pdfConfig.format || 'A4') as PaperFormat,
+      const pdfOptions: any = {
         landscape: pdfConfig.orientation === 'landscape',
-        printBackground: pdfConfig.printBackground ?? true,
-        displayHeaderFooter: hasHeaderOrFooter,
-        headerTemplate: headerHtml,
-        footerTemplate: footerHtml,
-        margin: {
+        printBackground: pdfConfig.printBackground ?? true
+      };
+
+      if (pdfConfig.width && pdfConfig.height) {
+        pdfOptions.width = pdfConfig.width;
+        pdfOptions.height = pdfConfig.height;
+      } else if (pdfConfig.format?.toLowerCase() === 'square') {
+        pdfOptions.width = '200mm';
+        pdfOptions.height = '200mm';
+      } else if (pdfConfig.format?.includes('x')) {
+        const [w, h] = pdfConfig.format.split('x');
+        pdfOptions.width = w.endsWith('px') || w.endsWith('mm') || w.endsWith('in') ? w : `${w}px`;
+        pdfOptions.height = h.endsWith('px') || h.endsWith('mm') || h.endsWith('in') ? h : `${h}px`;
+      } else {
+        pdfOptions.format = (pdfConfig.format || 'A4') as PaperFormat;
+      }
+
+      if (isFullBleed) {
+        pdfOptions.margin = {
+          top: '0px',
+          bottom: '0px',
+          left: '0px',
+          right: '0px'
+        };
+        pdfOptions.displayHeaderFooter = false;
+      } else {
+        const headerHtml = buildPuppeteerHeaderTemplate(options.headerTemplate, options.config);
+        const footerHtml = buildPuppeteerFooterTemplate(options.footerTemplate, options.config);
+        const hasHeaderOrFooter = Boolean(options.headerTemplate || options.footerTemplate || pdfConfig.pageNumbers);
+
+        pdfOptions.displayHeaderFooter = hasHeaderOrFooter;
+        pdfOptions.headerTemplate = headerHtml;
+        pdfOptions.footerTemplate = footerHtml;
+        pdfOptions.margin = {
           top: pdfConfig.margins?.top || '20mm',
           bottom: pdfConfig.margins?.bottom || '20mm',
           left: pdfConfig.margins?.left || '20mm',
           right: pdfConfig.margins?.right || '20mm'
-        }
-      });
+        };
+      }
+
+      const pdfUint8 = await page.pdf(pdfOptions);
+
 
       const durationMs = Date.now() - startTime;
       return {

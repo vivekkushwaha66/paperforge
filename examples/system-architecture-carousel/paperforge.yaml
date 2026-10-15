@@ -1,0 +1,42 @@
+title: "High-Throughput State Sharing & Architecture"
+subtitle: "Deterministic Concurrency Patterns for Low-Latency Systems"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "October 2026"
+subject: "Software Engineering | System Architecture"
+keywords:
+  - "systems"
+  - "architecture"
+  - "concurrency"
+  - "trading-engine"
+  - "low-latency"
+
+output:
+  file: "./dist/system-architecture-carousel.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+pdf:
+  format: "Square"
+  width: "1080px"
+  height: "1080px"
+  background: "#111215"
+  layout: "cards"
+  margins:
+    top: "36px"
+    bottom: "36px"
+    left: "54px"
+    right: "54px"
+  content_margins:
+    top: "20px"
+    bottom: "20px"
+    left: "0px"
+    right: "0px"
+
+toc:
+  enabled: false
+
+theme:
+  name: "executive-carousel"

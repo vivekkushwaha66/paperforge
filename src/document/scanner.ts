@@ -60,11 +60,28 @@ export interface ScannedProject {
   headerTemplate?: string;
   footerTemplate?: string;
   documents: DocumentFile[];
+  mergedMetadata: Record<string, any>;
 }
 
 export function scanProject(projectDir: string, config: ProjectConfig): ScannedProject {
   const contentDir = path.resolve(projectDir, config.content.directory);
   logger.debug(`Scanning content directory: ${contentDir}`);
+
+  const mergedMetadata: Record<string, any> = {
+    title: config.title,
+    subtitle: config.subtitle,
+    author: config.author,
+    version: config.version,
+    date: config.date,
+    description: config.description,
+    subject: config.subject,
+    keywords: [...config.keywords],
+    language: config.language,
+    creator: config.creator,
+    publisher: config.publisher,
+    copyright: config.copyright,
+    ...(config.metadata || {})
+  };
 
   // 1. Scan and parse cover.md if configured or present
   let coverDoc: DocumentFile | undefined;
@@ -75,6 +92,14 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
   if (fs.existsSync(coverFilePath) && fs.statSync(coverFilePath).isFile()) {
     const raw = fs.readFileSync(coverFilePath, 'utf-8');
     const { frontmatter, content, extractedTitle } = parseFrontmatter(raw, config.title);
+
+    const bg = frontmatter.background || frontmatter.bg || frontmatter.backgroundColor;
+    const pageMargins = frontmatter.margins || frontmatter.page_margins || frontmatter.pageMargins;
+    const contentMargins = frontmatter.content_margins || frontmatter.contentMargins;
+    const style = frontmatter.style || frontmatter.styles;
+    const className = frontmatter.class || frontmatter.className;
+    const accentColor = frontmatter.accent_color || frontmatter.accentColor;
+
     coverDoc = {
       filePath: coverFilePath,
       relativePath: path.relative(projectDir, coverFilePath),
@@ -88,11 +113,23 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
       toc: false,
       pageBreakBefore: false,
       pageBreakAfter: true,
-      header: false,
-      footer: false,
+      header: frontmatter.header ?? false,
+      footer: frontmatter.footer ?? false,
       pageNumbers: false,
+      background: bg,
+      pageMargins,
+      contentMargins,
+      style,
+      className,
+      theme: frontmatter.theme,
+      accentColor,
+      metadata: frontmatter.metadata,
       frontmatter
     };
+
+    if (frontmatter.metadata) {
+      Object.assign(mergedMetadata, frontmatter.metadata);
+    }
     logger.debug(`Found cover file: ${coverFilePath}`);
   }
 
@@ -132,6 +169,13 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
     const { frontmatter, content, extractedTitle } = parseFrontmatter(raw, defaultTitle || 'Chapter');
     const slug = path.basename(relFile, path.extname(relFile)).toLowerCase().replace(/[^a-z0-9_-]/g, '-');
 
+    const bg = frontmatter.background || frontmatter.bg || frontmatter.backgroundColor;
+    const pageMargins = frontmatter.margins || frontmatter.page_margins || frontmatter.pageMargins;
+    const contentMargins = frontmatter.content_margins || frontmatter.contentMargins;
+    const style = frontmatter.style || frontmatter.styles;
+    const className = frontmatter.class || frontmatter.className;
+    const accentColor = frontmatter.accent_color || frontmatter.accentColor;
+
     documents.push({
       filePath: fullPath,
       relativePath: path.relative(projectDir, fullPath),
@@ -139,7 +183,8 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
       type: frontmatter.type || 'chapter',
       title: frontmatter.title || extractedTitle,
       subtitle: frontmatter.subtitle,
-      order: frontmatter.order,
+      order: frontmatter.order ?? frontmatter.page,
+      page: frontmatter.page ?? frontmatter.order,
       author: frontmatter.author,
       description: frontmatter.description,
       rawMarkdown: content,
@@ -148,11 +193,31 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
       tocDepth: frontmatter.toc_depth,
       pageBreakBefore: frontmatter.page_break_before !== false,
       pageBreakAfter: frontmatter.page_break_after === true,
-      header: frontmatter.header !== false,
-      footer: frontmatter.footer !== false,
+      header: frontmatter.header !== false ? frontmatter.header : false,
+      footer: frontmatter.footer !== false ? frontmatter.footer : false,
       pageNumbers: frontmatter.page_numbers !== false,
+      background: bg,
+      pageMargins,
+      contentMargins,
+      style,
+      className,
+      theme: frontmatter.theme,
+      accentColor,
+      metadata: frontmatter.metadata,
       frontmatter
     });
+
+    // Merge document-level metadata overrides
+    if (frontmatter.metadata) {
+      Object.assign(mergedMetadata, frontmatter.metadata);
+    }
+    if (frontmatter.keywords && frontmatter.keywords.length > 0) {
+      mergedMetadata.keywords = Array.from(new Set([...(mergedMetadata.keywords || []), ...frontmatter.keywords]));
+    }
+    if (frontmatter.subject) mergedMetadata.subject = frontmatter.subject;
+    if (frontmatter.publisher) mergedMetadata.publisher = frontmatter.publisher;
+    if (frontmatter.copyright) mergedMetadata.copyright = frontmatter.copyright;
+    if (frontmatter.version) mergedMetadata.version = frontmatter.version;
   }
 
   // Sort documents deterministically
@@ -163,6 +228,8 @@ export function scanProject(projectDir: string, config: ProjectConfig): ScannedP
     coverDoc,
     headerTemplate,
     footerTemplate,
-    documents: sortedDocuments
+    documents: sortedDocuments,
+    mergedMetadata
   };
 }
+

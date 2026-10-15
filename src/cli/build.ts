@@ -79,7 +79,8 @@ export async function runBuildCommand(rawProjectPath: string = '.', options: Bui
       footerTemplate: scanned.footerTemplate,
       documents: scanned.documents,
       themeCss: '',
-      typographyCss: ''
+      typographyCss: '',
+      mergedMetadata: scanned.mergedMetadata
     };
 
     // Stage 6, 7, 8, 9, 10: Assemble Full HTML
@@ -111,7 +112,8 @@ export async function runBuildCommand(rawProjectPath: string = '.', options: Bui
     // Stage 12: Inject PDF /Info & XMP Metadata
     logger.step(12, 14, 'Inject PDF /Info & XMP Metadata (pdf-lib)');
     currentStage = 12;
-    const metadataResult = await injectPdfMetadata(renderResult.pdfBuffer, config);
+    const metadataResult = await injectPdfMetadata(renderResult.pdfBuffer, scanned.mergedMetadata || config);
+
 
     // Stage 13: Write Binary PDF to Disk
     logger.step(13, 14, 'Write Binary PDF to Disk');
