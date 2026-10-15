@@ -71,7 +71,14 @@ Paperforge adopts an **Abstract Renderer Interface** (`IPdfRenderer`) with **Sys
 * **Result:** Instant installation (< 5 MB npm footprint), zero binary downloads, and 100% support for CSS Grid, Flexbox, `@page`, Google Fonts, and SVGs.
 * **Graceful Fallback:** If no browser is found in a stripped-down Docker container, Paperforge provides `paperforge install-browser` which pulls only the stripped **`chrome-headless-shell`** (~40MB vs 300MB).
 
-### Engine 2: Typst Engine Adapter (Optional Native Compiler)
+### Engine 2: PDFMake & Direct Vector SVG Engine
+
+* Pure JavaScript PDF generator executing directly in Node.js with **zero browser dependencies**.
+* Compiles Markdown AST directly into PDF primitives with embedded vector SVGs via `{ svg: svgContent }`.
+* Sub-100ms compilation speed (~0.09s for multi-page carousels).
+* Natively supports full-bleed page backgrounds, custom page and content margins, in-page headers, and metadata injection.
+
+### Engine 3: Typst Engine Adapter (Optional Native Compiler)
 
 * Typst is a modern, Rust-based typesetting engine built as an alternative to LaTeX.
 * Through the `@myriaddreamin/typst-ts-node` package or Wasm bindings, Paperforge can compile documents directly in memory in **under 100 milliseconds** with **zero browser dependencies**.

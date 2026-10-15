@@ -41,16 +41,26 @@ footer:
 
 # PDF Engine & Page Properties
 pdf:
-  format: "A4"                  # A4, Letter, Legal, or custom { width, height }
+  format: "A4"                  # A4, Letter, Legal, or custom dimensions
+  width: "1080px"               # Explicit width (e.g. "1080px", "210mm", "8.5in")
+  height: "1080px"              # Explicit height (e.g. "1080px", "297mm", "11in")
   orientation: "portrait"       # portrait | landscape
-  printBackground: true
-  pageNumbers: true
-  margins:
-    top: "20mm"
-    bottom: "20mm"
-    left: "20mm"
-    right: "20mm"
-  renderer: "system-browser"    # system-browser | puppeteer-core | typst
+  printBackground: true         # Include background colors & graphics
+  pageNumbers: true             # Show page numbers
+  background: "#0B0F19"         # Global page background color
+  fullBleed: true               # Enable edge-to-edge printing with zero browser margin clip
+  layout: "cards"               # document | cards | presentation | slides
+  margins:                      # Page margins / outer shell padding
+    top: "32px"
+    bottom: "32px"
+    left: "48px"
+    right: "48px"
+  content_margins:              # Separate inner content spacing
+    top: "10px"
+    bottom: "10px"
+    left: "0px"
+    right: "0px"
+  renderer: "system-browser"    # system-browser | puppeteer-core | typst | pdfmake
 
 # Table of Contents Configuration (New)
 toc:
@@ -258,9 +268,18 @@ Content begins here...
 * `footer` (`boolean`, default: `true`): Controls whether the running footer appears on this document's pages.
 * `page_numbers` (`boolean`, default: `true`): Controls page counter visibility on this document.
 
-#### Metadata Properties
-* `subject` (`string`, optional)
-* `keywords` (`string[]`, optional)
+#### Styling & Visual Properties (New)
+* `background` (`string`, optional): Custom background color or gradient for this specific page (e.g. `"#0B0F19"`, `"#061A23"`). Fills the entire page including margin areas.
+* `margins` (`string | object`, optional): Overrides page shell margins/padding for this document (e.g. `"32px 48px"` or `{ top: "20mm", bottom: "20mm", left: "20mm", right: "20mm" }`).
+* `content_margins` (`string | object`, optional): Separate inner content spacing/margin (e.g. `"10px 0px"`).
+* `accent_color` (`string`, optional): Primary accent color for headers, badges, and card boundaries (e.g. `"#DFBA87"`, `"#38BDF8"`).
+* `className` (`string`, optional): Additional CSS class names attached to the page container for targeted CSS styling.
+* `style` (`string`, optional): Inline CSS rules applied directly to this page's root container.
+
+#### Metadata Properties & Dynamic Overrides
+* `metadata` (`record<string, any>`, optional): Dynamic PDF metadata dictionary. Values defined in frontmatter override the global `paperforge.yaml` metadata.
+* `subject` (`string`, optional): Injected into PDF `/Subject` dictionary and XMP metadata.
+* `keywords` (`string[]`, optional): Injected into PDF `/Keywords` dictionary and search indexes.
 * `language` (`string`, optional, e.g., `"en-US"`)
 * `version` (`string`, optional)
 * `copyright` (`string`, optional)

@@ -13,6 +13,9 @@ export interface LoadedConfig {
 
 export function findConfigFile(projectDir: string): string | null {
   const candidates = [
+    'paperforge.config.yaml',
+    'paperforge.config.yml',
+    'paperforge.config.json',
     'paperforge.yaml',
     'paperforge.yml',
     'paperforge.json'

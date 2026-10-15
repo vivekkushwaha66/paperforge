@@ -1,10 +1,12 @@
 import { ProjectConfig } from '../config/schema.js';
+import { Publication } from '../document/model.js';
 
 export interface RenderOptions {
   config: ProjectConfig;
   headerTemplate?: string;
   footerTemplate?: string;
   outputPath: string;
+  publication?: Publication;
 }
 
 export interface RenderResult {

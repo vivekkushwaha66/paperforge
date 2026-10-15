@@ -1,0 +1,41 @@
+title: "Autonomous AI Infrastructure Brief"
+subtitle: "Strategic Architecture Analysis for Engineering Leadership"
+author: "Vivek Kushwaha"
+version: "1.0.0"
+date: "October 2026"
+subject: "AI Infrastructure & Distributed Compute"
+keywords:
+  - "ai"
+  - "infrastructure"
+  - "executive-brief"
+  - "distributed-systems"
+
+output:
+  file: "./dist/executive-brief-cards.pdf"
+
+content:
+  directory: "./content"
+  include: ["*.md"]
+
+pdf:
+  format: "Square"
+  width: "1080px"
+  height: "1080px"
+  background: "#0A0D14"
+  layout: "cards"
+  margins:
+    top: "40px"
+    bottom: "40px"
+    left: "50px"
+    right: "50px"
+  content_margins:
+    top: "20px"
+    bottom: "20px"
+    left: "0px"
+    right: "0px"
+
+toc:
+  enabled: false
+
+theme:
+  name: "executive-carousel"

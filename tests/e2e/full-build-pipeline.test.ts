@@ -82,4 +82,58 @@ describe('E2E: Full Publication Build Pipeline & PDF Verification', () => {
     expect(pdfDoc.getPageCount()).toBeGreaterThanOrEqual(3);
     expect(pdfDoc.getTitle()).toBe('Technical Architecture Whitepaper');
   }, BUILD_TIMEOUT);
+
+  it('compiles "System Architecture Carousel" (1080x1080 square cards) to publication PDF', async () => {
+    const projectDir = path.resolve('examples/system-architecture-carousel');
+    const expectedPdfPath = path.resolve(projectDir, 'dist/system-architecture-carousel.pdf');
+
+    if (fs.existsSync(expectedPdfPath)) {
+      fs.unlinkSync(expectedPdfPath);
+    }
+
+    await runBuildCommand(projectDir, {});
+
+    expect(fs.existsSync(expectedPdfPath)).toBe(true);
+    const pdfBytes = fs.readFileSync(expectedPdfPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes, { updateMetadata: false });
+    expect(pdfDoc.getPageCount()).toBe(5);
+    expect(pdfDoc.getTitle()).toBe('Most systems slow down because of how they share state');
+  }, BUILD_TIMEOUT);
+
+  it('compiles "Executive Brief Cards" with multi-page styling and updated metadata', async () => {
+    const projectDir = path.resolve('examples/executive-brief-cards');
+    const expectedPdfPath = path.resolve(projectDir, 'dist/executive-brief-cards.pdf');
+
+    if (fs.existsSync(expectedPdfPath)) {
+      fs.unlinkSync(expectedPdfPath);
+    }
+
+    await runBuildCommand(projectDir, {});
+
+    expect(fs.existsSync(expectedPdfPath)).toBe(true);
+    const pdfBytes = fs.readFileSync(expectedPdfPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes, { updateMetadata: false });
+    expect(pdfDoc.getPageCount()).toBe(3);
+    expect(pdfDoc.getSubject()).toBe('Strategic AI Compute & Agent Orchestration');
+    expect(pdfDoc.getKeywords()).toContain('gpu-clusters');
+  }, BUILD_TIMEOUT);
+
+  it('compiles "Vector Chart Carousel" using direct pdfmake renderer and SVG charts', async () => {
+    const projectDir = path.resolve('examples/vector-chart-carousel');
+    const expectedPdfPath = path.resolve(projectDir, 'dist/vector-architecture-cards.pdf');
+
+    if (fs.existsSync(expectedPdfPath)) {
+      fs.unlinkSync(expectedPdfPath);
+    }
+
+    await runBuildCommand(projectDir, {});
+
+    expect(fs.existsSync(expectedPdfPath)).toBe(true);
+    const pdfBytes = fs.readFileSync(expectedPdfPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes, { updateMetadata: false });
+    expect(pdfDoc.getPageCount()).toBe(3);
+    expect(pdfDoc.getTitle()).toBe('Modern Cloud Microservices Architecture');
+    expect(pdfDoc.getAuthor()).toBe('Engineering Platform Team');
+  }, BUILD_TIMEOUT);
 });
+

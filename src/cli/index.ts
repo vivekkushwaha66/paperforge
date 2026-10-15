@@ -15,7 +15,7 @@ program
   .command('build [project-path]')
   .description('Compile target markdown publication into distribution PDF')
   .option('-o, --output <path>', 'Override the destination PDF path')
-  .option('-r, --renderer <engine>', 'Select rendering engine (system-browser, puppeteer-core, typst)')
+  .option('-r, --renderer <engine>', 'Select rendering engine (system-browser, puppeteer-core, typst, pdfmake)')
   .option('-v, --verbose', 'Enable verbose logging and diagnostic output')
   .option('-w, --watch', 'Rebuild automatically when files change')
   .action(async (projectPath, options) => {

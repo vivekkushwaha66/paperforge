@@ -316,5 +316,70 @@ blockquote {
 
 ---
 
+## 7. Full-Bleed Page Backgrounds & Separate Margins
+
+For slide decks, social carousels, and publication cards, Paperforge supports complete edge-to-edge full-bleed printing where the background color paints the entire physical page (including margins).
+
+### Page Margins vs. Content Margins
+
+Paperforge separates outer page margins from inner content margins:
+
+1. **Page Margins (`margins`)**: Controls the physical page shell padding (e.g. `32px 48px`). The background color flows completely behind this padding to the physical edges.
+2. **Content Margins (`content_margins`)**: Spacing applied specifically to the inner `<main class="forge-page-content">` body, providing breathing room without affecting running headers or accent bars.
+
+```yaml
+# paperforge.yaml
+pdf:
+  fullBleed: true
+  layout: "cards"
+  width: "1080px"
+  height: "1080px"
+  margins: "32px 48px"          # Shell padding
+  content_margins: "10px 0px"   # Inner content spacing
+```
+
+Per-page overrides can also be specified in frontmatter:
+
+```markdown
+---
+title: "Multi-Region Resilience"
+background: "#0C1B33"           # Navy background fills 100% of the page
+margins: "40px 60px"
+content_margins: "15px 0px"
+accent_color: "#38BDF8"
+---
+```
+
+---
+
+## 8. Architecture Cards & Carousel Layouts
+
+Paperforge provides built-in support for LinkedIn / Twitter architecture carousels and executive slide decks:
+
+* **Square Format (1080×1080)**: Ideal for social carousels and slide decks.
+* **In-Page Running Headers**: Includes a sleek metallic accent bar on the left and formatted page counter (`01 / 05`) on the right.
+* **Native Diagram Cards**: Diagrams and code blocks are automatically enclosed in high-contrast card boxes (`.forge-diagram-card`).
+* **Clean Page Breaks**: Exact 1-to-1 page budgeting with zero trailing blank pages.
+
+### Example Architecture Card Publication
+
+```yaml
+# paperforge.config.yaml
+title: "System Architecture Carousel"
+author: "Engineering Platform"
+output:
+  file: "./dist/system-architecture.pdf"
+
+pdf:
+  layout: "cards"
+  fullBleed: true
+  width: "1080px"
+  height: "1080px"
+  margins: "32px 48px"
+  background: "#0A0B0E"
+```
+
+---
+
 *Previous Document:* [03. Configuration and Frontmatter](./03-configuration-and-frontmatter.md)  
 *Next Document:* [05. PDF Metadata and Assets](./05-pdf-metadata-and-assets.md)
