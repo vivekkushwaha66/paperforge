@@ -145,7 +145,7 @@ describe('Full-Bleed HTML Assembler with Separate Margins and Backgrounds', () =
       pageMargins: { top: '32px', bottom: '32px', left: '48px', right: '48px' },
       contentMargins: { top: '24px', bottom: '24px', left: '0px', right: '0px' },
       style: 'color: #FFF;',
-      frontmatter: {}
+      frontmatter: FrontmatterSchema.parse({})
     };
 
     const pub: Publication = {
@@ -193,7 +193,7 @@ describe('Full-Bleed HTML Assembler with Separate Margins and Backgrounds', () =
       pageNumbers: true,
       background: '#0B132B',
       style: 'border-left: 4px solid #38BDF8;',
-      frontmatter: {}
+      frontmatter: FrontmatterSchema.parse({})
     };
 
     const doc2: DocumentFile = {
@@ -212,7 +212,7 @@ describe('Full-Bleed HTML Assembler with Separate Margins and Backgrounds', () =
       pageNumbers: true,
       background: '#18181B',
       style: 'border-left: 4px solid #34D399;',
-      frontmatter: {}
+      frontmatter: FrontmatterSchema.parse({})
     };
 
     const pub: Publication = {

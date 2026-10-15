@@ -36,7 +36,7 @@ export interface DocumentFile {
   metadata?: Record<string, any>;
 
   // Metadata
-  frontmatter: Frontmatter;
+  frontmatter: Frontmatter | Record<string, any>;
 }
 
 export interface Publication {
