@@ -38,6 +38,10 @@ describe('PdfMakeRenderer & Direct SVG Vector Engine', () => {
 
     const doc1: DocumentFile = {
       filePath: '/path/01.md',
+      relativePath: '01.md',
+      slug: '01',
+      type: 'card',
+      title: 'Architecture Overview',
       rawMarkdown: `# Scalable Cloud Architecture
 
 This is a **high-performance** architectural diagram embedded as vector SVG.
@@ -52,15 +56,25 @@ This is a **high-performance** architectural diagram embedded as vector SVG.
 - Zero browser dependencies required
 - Crisp at any zoom level
 `,
-      title: 'Architecture Overview',
-      slug: '01',
+      htmlContent: '',
+      toc: false,
+      pageBreakBefore: false,
+      pageBreakAfter: false,
+      header: true,
+      footer: true,
+      pageNumbers: true,
       order: 1,
       background: '#0F172A',
-      accentColor: '#DFBA87'
+      accentColor: '#DFBA87',
+      frontmatter: {}
     };
 
     const doc2: DocumentFile = {
       filePath: '/path/02.md',
+      relativePath: '02.md',
+      slug: '02',
+      type: 'card',
+      title: 'Failover Strategy',
       rawMarkdown: `# Multi-Region Failover
 
 Here is a chart defined inside a fenced svg block:
@@ -74,18 +88,25 @@ Here is a chart defined inside a fenced svg block:
 
 > Active-active replication guarantees sub-second recovery times.
 `,
-      title: 'Failover Strategy',
-      slug: '02',
+      htmlContent: '',
+      toc: false,
+      pageBreakBefore: false,
+      pageBreakAfter: false,
+      header: true,
+      footer: true,
+      pageNumbers: true,
       order: 2,
       background: '#020617',
-      accentColor: '#60A5FA'
+      accentColor: '#60A5FA',
+      frontmatter: {}
     };
 
     const publication: Publication = {
       projectDir: '.',
       config,
       documents: [doc1, doc2],
-      assets: []
+      themeCss: '',
+      typographyCss: ''
     };
 
     const result = await renderer.render('', {
